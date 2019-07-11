@@ -63,8 +63,6 @@ class Method
 
     public function addInput($name, $type)
     {
-        $this->input = new Message($name);
-
         $this->input->add($name, $type);
     }
 
