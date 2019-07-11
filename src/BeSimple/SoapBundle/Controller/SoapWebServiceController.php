@@ -94,9 +94,15 @@ class SoapWebServiceController implements ContainerAwareInterface
      */
     public function definitionAction($webservice)
     {
+        $routeName = $webservice . '_webservice_call';
+        $result = $this->container->get('router')->getRouteCollection()->get($routeName);
+        if ($result === null) {
+            $routeName = '_webservice_call';
+        }
+
         $response = new Response($this->getWebServiceContext($webservice)->getWsdlFileContent(
             $this->container->get('router')->generate(
-                '_webservice_call',
+                $routeName,
                 array('webservice' => $webservice),
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
