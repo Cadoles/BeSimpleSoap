@@ -235,17 +235,9 @@ class Dumper
 
     protected function addComplexType(ComplexType $type)
     {
-        $rootElement = $this->document->createElement(static::XSD_NS.':element');
-        $rootElement->setAttribute('name', $type->getName());
-
         $complexType = $this->document->createElement(static::XSD_NS.':complexType');
-        if ($type instanceof ArrayOfType) {
-            $complexType->setAttribute('name', $type->getName());
-        }
+        $complexType->setAttribute('name', $type->getXmlType());
 
-        $rootElement->appendChild($complexType);
-
-        //$all = $this->document->createElement(static::XSD_NS.':'.($type instanceof ArrayOfType ? 'sequence' : 'all'));
         $all = $this->document->createElement(static::XSD_NS.':'.'sequence');
         $complexType->appendChild($all);
 
@@ -265,11 +257,6 @@ class Dumper
                 if ($childType instanceof ArrayOfType) {
                     $name = $childType->getName();
                 }
-
-//                if (0 === strpos($name, 'ArrayOf')) {
-//                    $isArray = true;
-//                    $name = lcfirst(substr($name, 7));
-//                }
 
                 $element->setAttribute('type', static::TYPES_NS.':'.$name);
             } else {
@@ -296,7 +283,7 @@ class Dumper
             }
         }
 
-        $this->domSchema->appendChild($type instanceof ArrayOfType ? $complexType : $rootElement);
+        $this->domSchema->appendChild($complexType);
     }
 
     protected function addPortType()
