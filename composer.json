@@ -1,5 +1,5 @@
 {
-    "name": "cocciagialla/soap",
+    "name": "cadoles/soap",
     "type": "library",
     "description": "Build and consume SOAP and WSDL based web services",
     "keywords": ["soap"],
@@ -33,7 +33,8 @@
         "besimple/soap-client": "self.version",
         "besimple/soap-common": "self.version",
         "besimple/soap-server": "self.version",
-        "besimple/soap-wsdl":   "self.version"
+        "besimple/soap-wsdl":   "self.version",
+        "cocciagialla/soap":    "self.version"
     },
     "require-dev": {
         "ext-mcrypt": "*",
