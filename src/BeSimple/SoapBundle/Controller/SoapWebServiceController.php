@@ -17,12 +17,12 @@ use BeSimple\SoapBundle\Soap\SoapRequest;
 use BeSimple\SoapBundle\Soap\SoapResponse;
 use BeSimple\SoapBundle\WebServiceContext;
 use BeSimple\SoapServer\SoapServerBuilder;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
@@ -153,17 +153,17 @@ class SoapWebServiceController implements ContainerAwareInterface
             ->build()
         ;
 
-//        ob_start();
-//        $server->handle(
-//            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://besim.pl/soap/exception/1.0/">'.
-//            '<soapenv:Header/>'.
-//            '<soapenv:Body>'.
-//            '<ns:exception />'.
-//            '</soapenv:Body>'.
-//            '</soapenv:Envelope>'
-//        );
-//
-//        return new Response(ob_get_clean());
+        ob_start();
+        $server->handle(
+            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://besim.pl/soap/exception/1.0/">'.
+               '<soapenv:Header/>'.
+               '<soapenv:Body>'.
+                  '<ns:exception />'.
+               '</soapenv:Body>'.
+            '</soapenv:Envelope>'
+        );
+
+        return new Response(ob_get_clean());
     }
 
     /**
