@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Build and consume SOAP and WSDL based web services",
     "keywords": ["soap"],
-    "homepage": "http://besim.pl",
+    "homepage": "https://github.com/Cadoles/BeSimpleSoap",
     "license": "MIT",
     "authors": [
         {
@@ -37,8 +37,7 @@
         "cocciagialla/soap":    "self.version"
     },
     "require-dev": {
-        "ext-mcrypt": "*",
-        "mikey179/vfsStream": "~1.6.5",
+        "mikey179/vfsstream": "~1.6.5",
         "symfony/filesystem": "~2.3",
         "symfony/process": "~2.3",
         "phpunit/phpunit": "^5.7"
