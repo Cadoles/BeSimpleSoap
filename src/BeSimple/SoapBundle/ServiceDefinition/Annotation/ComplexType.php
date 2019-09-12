@@ -18,7 +18,6 @@ class ComplexType extends Configuration
     private $name;
     private $value;
     private $isNillable = false;
-    private $isAttribute = false;
 
     public function getName()
     {
@@ -58,26 +57,6 @@ class ComplexType extends Configuration
     public function setIsNillable($isNillable)
     {
         $this->isNillable = (bool) $isNillable;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAttribute()
-    {
-        return $this->isAttribute;
-    }
-
-    /**
-     * @param bool $isAttribute
-     *
-     * @return $this
-     */
-    public function setIsAttribute($isAttribute)
-    {
-            $this->isAttribute = $isAttribute;
-
-            return $this;
     }
 
     public function getAliasName()

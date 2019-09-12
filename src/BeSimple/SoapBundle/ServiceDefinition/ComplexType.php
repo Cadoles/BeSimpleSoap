@@ -20,7 +20,6 @@ class ComplexType
     private $name;
     private $value;
     private $isNillable = false;
-    private $isAttribute = false;
 
     public function getName()
     {
@@ -45,26 +44,6 @@ class ComplexType
     public function setValue($value)
     {
         $this->value = $value;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAttribute()
-    {
-        return $this->isAttribute;
-    }
-
-    /**
-     * @param bool $isAttribute
-     *
-     * @return $this
-     */
-    public function setIsAttribute($isAttribute)
-    {
-        $this->isAttribute = $isAttribute;
-
-        return $this;
     }
 
     public function setNillable($isNillable)

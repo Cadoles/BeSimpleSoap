@@ -217,13 +217,11 @@ class Dumper
 
     protected function addComplexTypes()
     {
-        $types = $this->document->createElement(static::WSDL_NS . ':types');
+        $types = $this->document->createElement('types');
         $this->domDefinitions->appendChild($types);
 
         $this->domSchema = $this->document->createElement(static::XSD_NS.':schema');
         $this->domSchema->setAttribute('targetNamespace', $this->definition->getNamespace());
-        $this->domSchema->setAttribute('elementFormDefault', 'unqualified');
-        $this->domSchema->setAttribute(static::XML_NS.':'.static::XSD_NS, static::XSD_NS_URI);
         $types->appendChild($this->domSchema);
 
         foreach ($this->definition->getTypeRepository()->getComplexTypes() as $type) {
@@ -238,18 +236,13 @@ class Dumper
         $complexType = $this->document->createElement(static::XSD_NS.':complexType');
         $complexType->setAttribute('name', $type->getXmlType());
 
-        $all = $this->document->createElement(static::XSD_NS.':'.'sequence');
+        $all = $this->document->createElement(static::XSD_NS.':'.($type instanceof ArrayOfType ? 'sequence' : 'all'));
         $complexType->appendChild($all);
 
         foreach ($type->all() as $child) {
-            $isArray = false;
             $childType = $this->definition->getTypeRepository()->getType($child->getType());
 
-            if ($child->isAttribute()) {
-                $element = $this->document->createElement(static::XSD_NS.':attribute');
-            } else {
-                $element = $this->document->createElement(static::XSD_NS.':element');
-            }
+            $element = $this->document->createElement(static::XSD_NS.':element');
             $element->setAttribute('name', $child->getName());
 
             if ($childType instanceof ComplexType) {
@@ -269,18 +262,14 @@ class Dumper
                 $element->setAttribute('minOccurs', 1);
             }
 
-            if ($type instanceof ArrayOfType || $isArray) {
+            if ($type instanceof ArrayOfType) {
                 $element->setAttribute('minOccurs', 0);
                 $element->setAttribute('maxOccurs', 'unbounded');
             } else {
                 $element->setAttribute('maxOccurs', 1);
             }
 
-            if ($child->isAttribute()) {
-                $complexType->appendChild($element);
-            } else {
-                $all->appendChild($element);
-            }
+            $all->appendChild($element);
         }
 
         $this->domSchema->appendChild($complexType);

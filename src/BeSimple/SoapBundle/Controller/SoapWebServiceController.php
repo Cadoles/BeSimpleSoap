@@ -19,7 +19,6 @@ use BeSimple\SoapBundle\WebServiceContext;
 use BeSimple\SoapServer\SoapServerBuilder;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -59,7 +58,7 @@ class SoapWebServiceController implements ContainerAwareInterface
     /**
      * @var array
      */
-    private $headers = array();
+    private $headers = [];
 
     /**
      * @return \BeSimple\SoapBundle\Soap\SoapResponse
@@ -67,12 +66,12 @@ class SoapWebServiceController implements ContainerAwareInterface
     public function callAction($webservice)
     {
         /** @var WebServiceContext $webServiceContext */
-        $webServiceContext   = $this->getWebServiceContext($webservice);
+        $webServiceContext = $this->getWebServiceContext($webservice);
 
         $this->serviceBinder = $webServiceContext->getServiceBinder();
 
         $this->soapRequest = SoapRequest::createFromHttpRequest($this->container->get('request_stack')->getCurrentRequest());
-        $this->soapServer  = $webServiceContext
+        $this->soapServer = $webServiceContext
             ->getServerBuilder()
             ->withSoapVersion11()
             ->withHandler($this)
@@ -96,14 +95,14 @@ class SoapWebServiceController implements ContainerAwareInterface
     {
         $routeName = $webservice . '_webservice_call';
         $result = $this->container->get('router')->getRouteCollection()->get($routeName);
-        if ($result === null) {
+        if (null === $result) {
             $routeName = '_webservice_call';
         }
 
         $response = new Response($this->getWebServiceContext($webservice)->getWsdlFileContent(
             $this->container->get('router')->generate(
                 $routeName,
-                array('webservice' => $webservice),
+                ['webservice' => $webservice],
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
         ));
@@ -135,14 +134,14 @@ class SoapWebServiceController implements ContainerAwareInterface
             throw new \LogicException(sprintf('The parameter "%s" is required in Request::$query parameter bag to generate the SoapFault.', '_besimple_soap_webservice'), null, $e);
         }
 
-        $view = '@Twig/Exception/'.($this->container->get('kernel')->isDebug() ? 'exception' : 'error').'.txt.twig';
+        $view = '@Twig/Exception/' . ($this->container->get('kernel')->isDebug() ? 'exception' : 'error') . '.txt.twig';
         $code = $exception->getStatusCode();
-        $details = $this->container->get('twig')->render($view, array(
+        $details = $this->container->get('twig')->render($view, [
             'status_code' => $code,
             'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
-            'exception'   => $exception,
-            'logger'      => $logger,
-        ));
+            'exception' => $exception,
+            'logger' => $logger,
+        ]);
 
         $handler = new ExceptionHandler($exception, $details);
         if ($soapFault = $request->query->get('_besimple_soap_fault')) {
@@ -153,7 +152,7 @@ class SoapWebServiceController implements ContainerAwareInterface
         }
 
         $server = SoapServerBuilder::createWithDefaults()
-            ->withWsdl(__DIR__.'/../Handler/wsdl/exception.wsdl')
+            ->withWsdl(__DIR__ . '/../Handler/wsdl/exception.wsdl')
             ->withWsdlCacheNone()
             ->withHandler($handler)
             ->build()
@@ -161,11 +160,11 @@ class SoapWebServiceController implements ContainerAwareInterface
 
         ob_start();
         $server->handle(
-            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://besim.pl/soap/exception/1.0/">'.
-               '<soapenv:Header/>'.
-               '<soapenv:Body>'.
-                  '<ns:exception />'.
-               '</soapenv:Body>'.
+            '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://besim.pl/soap/exception/1.0/">' .
+               '<soapenv:Header/>' .
+               '<soapenv:Body>' .
+                  '<ns:exception />' .
+               '</soapenv:Body>' .
             '</soapenv:Envelope>'
         );
 
@@ -176,8 +175,8 @@ class SoapWebServiceController implements ContainerAwareInterface
      * This method gets called once for every SOAP header the \SoapServer received
      * and afterwards once for the called SOAP operation.
      *
-     * @param string $method The SOAP header or SOAP operation name
-     * @param array $arguments
+     * @param string $method    The SOAP header or SOAP operation name
+     * @param array  $arguments
      *
      * @return mixed
      */
@@ -234,7 +233,7 @@ class SoapWebServiceController implements ContainerAwareInterface
     }
 
     /**
-     * Set the SoapResponse
+     * Set the SoapResponse.
      *
      * @param Response $response A response to check and set
      *

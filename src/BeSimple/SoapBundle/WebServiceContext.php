@@ -79,10 +79,7 @@ class WebServiceContext
             }
 
             $dumper = new Dumper($definition, array('stylesheet' => $this->options['wsdl_stylesheet']));
-
-            $wsdl = $dumper->dump();
-
-            $cache->write($wsdl);
+            $cache->write($dumper->dump());
         }
 
         return $cache->getPath();
