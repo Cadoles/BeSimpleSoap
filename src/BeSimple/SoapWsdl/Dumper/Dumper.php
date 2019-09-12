@@ -203,9 +203,9 @@ class Dumper
                 $partElement->setAttribute('name', $part->getName());
 
                 if ($type instanceof ComplexType) {
-                    $partElement->setAttribute('element', static::TYPES_NS.':'.$type->getXmlType());
+                    $partElement->setAttribute('type', static::TYPES_NS.':'.$type->getXmlType());
                 } else {
-                    $partElement->setAttribute('element', $type);
+                    $partElement->setAttribute('type', $type);
                 }
 
                 $messageElement->appendChild($partElement);
