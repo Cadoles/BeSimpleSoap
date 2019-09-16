@@ -257,16 +257,12 @@ class Dumper
             }
 
             if ($child->isNillable()) {
-                $element->setAttribute('minOccurs', 0);
-            } else {
-                $element->setAttribute('minOccurs', 1);
+                $element->setAttribute('nillable', 'true');
             }
 
             if ($type instanceof ArrayOfType) {
                 $element->setAttribute('minOccurs', 0);
                 $element->setAttribute('maxOccurs', 'unbounded');
-            } else {
-                $element->setAttribute('maxOccurs', 1);
             }
 
             $all->appendChild($element);
