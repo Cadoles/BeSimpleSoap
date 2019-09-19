@@ -61,7 +61,7 @@ abstract class AbstractVersion implements VersionInterface
     {
         if (!$this->bindingNode) {
             $this->bindingNode = $this->document->createElement('binding');
-            $this->bindingNode->setAttribute('name', $this->name.'_SOAP');
+            $this->bindingNode->setAttribute('name', $this->name.'Binding');
             $this->bindingNode->setAttribute('type', $this->portTypeName);
 
             $this->addSoapBinding();
@@ -75,7 +75,7 @@ abstract class AbstractVersion implements VersionInterface
         if (!$this->servicePortNode) {
             $this->servicePortNode = $this->document->createElement('port');
             $this->servicePortNode->setAttribute('name', $this->name.'Port');
-            $this->servicePortNode->setAttribute('binding', $this->typeNs.':'.$this->name.'_SOAP');
+            $this->servicePortNode->setAttribute('binding', $this->typeNs.':'.$this->name.'Binding');
 
             $this->addSoapAddress();
         }

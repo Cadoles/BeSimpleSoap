@@ -12,8 +12,6 @@
 
 namespace BeSimple\SoapCommon\Definition;
 
-use BeSimple\SoapCommon\Definition\Type\TypeRepository;
-
 /**
  * @author Francis Besset <francis.besset@gmail.com>
  */
@@ -53,7 +51,7 @@ class Method
 
     public function getUse()
     {
-        return \SOAP_ENCODED;
+        return \SOAP_LITERAL;
     }
 
     public function addHeader($name, $type)
@@ -68,11 +66,7 @@ class Method
 
     public function setOutput($type, $name = 'return')
     {
-        if ('return' !== $name) {
-            $this->output = new Message($name);
-        }
-
-        $this->output->add($name, $type);
+        $this->output->add('return', $type);
     }
 
     public function getHeaders()
