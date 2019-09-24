@@ -93,6 +93,16 @@ class WsdlDownloader
         if ($isRemoteFile || $this->resolveRemoteIncludes) {
             $cacheFilePath = $this->cacheDir.DIRECTORY_SEPARATOR.'wsdl_'.md5($wsdl).'.cache';
 
+            if (file_exists($cacheFilePath)) {
+                clearstatcache();
+                $xml = \XMLReader::open($cacheFilePath);
+                $xml->setParserProperty(\XMLReader::VALIDATE, true);
+                if (!filesize($cacheFilePath) || !$xml->isValid()) {
+                    unlink($cacheFilePath);
+                    throw new \Exception('There is something wrong with the WSDL file formatting. The file has been deleted from the cache and will be downloaded again on the next request.');
+                }
+            }
+
             if (!$this->cacheEnabled || !file_exists($cacheFilePath) || (filemtime($cacheFilePath) + $this->cacheTtl) < time()) {
                 if ($isRemoteFile) {
                     // execute request
