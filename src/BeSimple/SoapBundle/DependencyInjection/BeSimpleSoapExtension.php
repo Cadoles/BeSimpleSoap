@@ -17,7 +17,7 @@ use BeSimple\SoapCommon\Cache;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -88,14 +88,14 @@ class BeSimpleSoapExtension extends Extension
         }
 
         foreach ($config as $client => $options) {
-            $definition = new DefinitionDecorator('besimple.soap.client.builder');
+            $definition = new ChildDefinition('besimple.soap.client.builder');
             $container->setDefinition(sprintf('besimple.soap.client.builder.%s', $client), $definition);
 
             $definition->replaceArgument(0, $options['wsdl']);
 
             $defOptions = $container
-                    ->getDefinition('besimple.soap.client.builder')
-                    ->getArgument(1);
+                ->getDefinition('besimple.soap.client.builder')
+                ->getArgument(1);
 
             foreach (array('cache_type', 'user_agent') as $key) {
                 if (isset($options[$key])) {
@@ -135,7 +135,7 @@ class BeSimpleSoapExtension extends Extension
 
     private function createClientClassmap($client, array $classmap, ContainerBuilder $container)
     {
-        $definition = new DefinitionDecorator('besimple.soap.classmap');
+        $definition = new ChildDefinition('besimple.soap.classmap');
         $container->setDefinition(sprintf('besimple.soap.classmap.%s', $client), $definition);
 
         if (!empty($classmap)) {
@@ -149,7 +149,7 @@ class BeSimpleSoapExtension extends Extension
 
     private function createClient($client, ContainerBuilder $container)
     {
-        $definition = new DefinitionDecorator('besimple.soap.client');
+        $definition = new ChildDefinition('besimple.soap.client');
         $container->setDefinition(sprintf('besimple.soap.client.%s', $client), $definition);
 
         if (3 === Kernel::MAJOR_VERSION) {
@@ -168,7 +168,7 @@ class BeSimpleSoapExtension extends Extension
         unset($config['binding']);
 
         $contextId  = 'besimple.soap.context.'.$config['name'];
-        $definition = new DefinitionDecorator('besimple.soap.context.'.$bindingSuffix);
+        $definition = new ChildDefinition('besimple.soap.context.'.$bindingSuffix);
         $container->setDefinition($contextId, $definition);
 
         if (isset($config['cache_type'])) {
@@ -177,6 +177,7 @@ class BeSimpleSoapExtension extends Extension
 
         $options = $container
             ->getDefinition('besimple.soap.context.'.$bindingSuffix)
+            ->setPublic(true)
             ->getArgument(2);
 
         $definition->replaceArgument(2, array_merge($options, $config));

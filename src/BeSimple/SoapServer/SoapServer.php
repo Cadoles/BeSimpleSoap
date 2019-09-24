@@ -131,9 +131,7 @@ class SoapServer extends \SoapServer
     /**
      * Configure filter and type converter for SwA/MTOM.
      *
-     * @param array &$options SOAP constructor options array.
-     *
-     * @return void
+     * @param array &$options SOAP constructor options array
      */
     private function configureMime(array &$options)
     {
@@ -157,11 +155,11 @@ class SoapServer extends \SoapServer
             }
             $options['typemap'][] = array(
                 'type_name' => $converter->getTypeName(),
-                'type_ns'   => $converter->getTypeNamespace(),
-                'from_xml'  => function ($input) use ($converter) {
+                'type_ns' => $converter->getTypeNamespace(),
+                'from_xml' => function ($input) use ($converter) {
                     return $converter->convertXmlToPhp($input);
                 },
-                'to_xml'    => function ($input) use ($converter) {
+                'to_xml' => function ($input) use ($converter) {
                     return $converter->convertPhpToXml($input);
                 },
             );

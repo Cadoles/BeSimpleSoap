@@ -14,12 +14,20 @@ use BeSimple\SoapBundle\ServiceDefinition\Method;
 use BeSimple\SoapCommon\Definition\Type\TypeRepository;
 
 /**
- * @author Christian Kerl <christian-kerl@web.de>
+ * @author Francis Besset <francis.besset@gmail.com>
  */
-class DocumentLiteralWrappedResponseMessageBinder implements MessageBinderInterface
+class DocumentLiteralWrappedRequestHeaderMessageBinder extends DocumentLiteralWrappedRequestMessageBinder
 {
+    private $header;
+
+    public function setHeader($header)
+    {
+        $this->header = $header;
+    }
+
     public function processMessage(Method $messageDefinition, $message, TypeRepository $typeRepository)
     {
-        return $message;
+        $headerDefinition = $messageDefinition->getHeaders()->get($this->header);
+        return [];
     }
 }
