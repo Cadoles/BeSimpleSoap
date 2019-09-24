@@ -65,6 +65,5 @@ class XmlMimeFilter implements SoapRequestFilter
                 }
             }
         }
-
     }
 }

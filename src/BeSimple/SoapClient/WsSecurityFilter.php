@@ -151,7 +151,6 @@ class WsSecurityFilter extends WsSecurityFilterClientServer implements SoapReque
             if (null !== $this->password
                 && (null === $this->userSecurityKey
                     || (null !== $this->userSecurityKey && !$this->userSecurityKey->hasPrivateKey()))) {
-
                 if (self::PASSWORD_TYPE_DIGEST === $this->passwordType) {
                     $nonce = mt_rand();
                     $password = base64_encode(sha1($nonce . $createdTimestamp . $this->password, true));

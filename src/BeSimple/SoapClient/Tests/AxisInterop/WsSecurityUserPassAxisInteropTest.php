@@ -74,7 +74,7 @@ class WsSecurityUserPassAxisInteropTest extends TestCase
         $sc = new BeSimpleSoapClient(__DIR__.'/Fixtures/WsSecurityUserPass.wsdl', $this->options);
 
         $wssFilter = new BeSimpleWsSecurityFilter(true, 600);
-        $wssFilter->addUserData( 'libuser', 'books', BeSimpleWsSecurityFilter::PASSWORD_TYPE_DIGEST );
+        $wssFilter->addUserData('libuser', 'books', BeSimpleWsSecurityFilter::PASSWORD_TYPE_DIGEST);
 
         $soapKernel = $sc->getSoapKernel();
         $soapKernel->registerFilter($wssFilter);

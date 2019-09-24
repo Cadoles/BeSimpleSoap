@@ -251,7 +251,6 @@ class Curl
         $errorCodeMapping = $this->getErrorCodeMapping();
         $errorNumber = curl_errno($this->ch);
         if (isset($errorCodeMapping[$errorNumber])) {
-
             return $errorCodeMapping[$errorNumber];
         }
 

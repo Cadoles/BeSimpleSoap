@@ -62,9 +62,9 @@ class SoapWebServiceController implements ContainerAwareInterface
      */
     private $headers = array();
 
-     /**
-     * {@inheritDoc}
-     */
+    /**
+    * {@inheritDoc}
+    */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

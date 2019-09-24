@@ -54,7 +54,6 @@ try {
     $ab->type = 'scifi';
 
     var_dump($sc->addBook($ab));
-
 } catch (Exception $e) {
     var_dump($e);
 }

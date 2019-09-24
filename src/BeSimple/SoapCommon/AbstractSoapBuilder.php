@@ -27,7 +27,7 @@ abstract class AbstractSoapBuilder
     /**
      * @return AbstractSoapBuilder
      */
-    static public function createWithDefaults()
+    public static function createWithDefaults()
     {
         $builder = new static();
 

@@ -22,5 +22,4 @@ use BeSimple\SoapCommon\SoapMessage;
  */
 class SoapRequest extends SoapMessage
 {
-
 }

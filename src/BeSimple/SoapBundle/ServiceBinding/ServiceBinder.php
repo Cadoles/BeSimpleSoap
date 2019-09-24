@@ -44,7 +44,8 @@ class ServiceBinder
      * @param MessageBinderInterface $requestMessageBinder
      * @param MessageBinderInterface $responseMessageBinder
      */
-    public function __construct(Definition $definition, MessageBinderInterface $requestHeaderMessageBinder, MessageBinderInterface $requestMessageBinder, MessageBinderInterface $responseMessageBinder) {
+    public function __construct(Definition $definition, MessageBinderInterface $requestHeaderMessageBinder, MessageBinderInterface $requestMessageBinder, MessageBinderInterface $responseMessageBinder)
+    {
         $this->definition = $definition;
 
         $this->requestHeaderMessageBinder = $requestHeaderMessageBinder;

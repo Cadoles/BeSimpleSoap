@@ -22,5 +22,5 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    function getAliasName();
+    public function getAliasName();
 }

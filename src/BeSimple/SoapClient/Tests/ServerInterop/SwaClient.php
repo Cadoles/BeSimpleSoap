@@ -29,7 +29,6 @@ $options = array(
 $sc = new BeSimpleSoapClient(__DIR__.'/Fixtures/SwA.wsdl', $options);
 
 try {
-
     $upload = new uploadFile();
     $upload->name = 'upload.txt';
     $upload->data = 'This is a test. :)';

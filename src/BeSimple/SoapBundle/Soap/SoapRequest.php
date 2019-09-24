@@ -69,7 +69,7 @@ class SoapRequest extends Request
      */
     public function getSoapMessage()
     {
-        if(null === $this->soapMessage) {
+        if (null === $this->soapMessage) {
             $this->soapMessage = $this->initializeSoapMessage();
         }
 
@@ -88,12 +88,12 @@ class SoapRequest extends Request
 
     protected function initializeSoapMessage()
     {
-        if($this->server->has('CONTENT_TYPE')) {
+        if ($this->server->has('CONTENT_TYPE')) {
             $type = $this->splitContentTypeHeader($this->server->get('CONTENT_TYPE'));
 
-            switch($type['_type']) {
+            switch ($type['_type']) {
                 case 'multipart/related':
-                    if($type['type'] == 'application/xop+xml') {
+                    if ($type['type'] == 'application/xop+xml') {
                         return $this->initializeMtomSoapMessage($type, $this->getContent());
                     } else {
                         //log error
@@ -114,7 +114,7 @@ class SoapRequest extends Request
 
     protected function initializeMtomSoapMessage(array $contentTypeHeader, $content)
     {
-        if(!isset($contentTypeHeader['start']) || !isset($contentTypeHeader['start-info']) || !isset($contentTypeHeader['boundary'])) {
+        if (!isset($contentTypeHeader['start']) || !isset($contentTypeHeader['start-info']) || !isset($contentTypeHeader['boundary'])) {
             throw new \InvalidArgumentException();
         }
 
@@ -129,11 +129,11 @@ class SoapRequest extends Request
 
         // TODO: add more checks to achieve full compatibility to MTOM spec
         // http://www.w3.org/TR/soap12-mtom/
-        if($rootPart->id != $soapMimePartId || $rootPartType['_type'] != 'application/xop+xml' || $rootPartType['type'] != $soapMimePartType) {
+        if ($rootPart->id != $soapMimePartId || $rootPartType['_type'] != 'application/xop+xml' || $rootPartType['type'] != $soapMimePartType) {
             throw new \InvalidArgumentException();
         }
 
-        foreach($mimeParts as $mimePart) {
+        foreach ($mimeParts as $mimePart) {
             $this->soapAttachments->add(new SoapAttachment(
                 $mimePart->id,
                 $mimePart->type,
@@ -153,7 +153,7 @@ class SoapRequest extends Request
 
         $result['_type'] = array_shift($parts);
 
-        foreach($parts as $part) {
+        foreach ($parts as $part) {
             list($key, $value) = explode('=', trim($part), 2);
 
             $result[$key] = trim($value, '"');

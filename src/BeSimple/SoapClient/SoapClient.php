@@ -338,10 +338,10 @@ class SoapClient extends \SoapClient
             $options['typemap'][] = array(
                 'type_name' => $converter->getTypeName(),
                 'type_ns'   => $converter->getTypeNamespace(),
-                'from_xml'  => function($input) use ($converter) {
+                'from_xml'  => function ($input) use ($converter) {
                     return $converter->convertXmlToPhp($input);
                 },
-                'to_xml'    => function($input) use ($converter) {
+                'to_xml'    => function ($input) use ($converter) {
                     return $converter->convertPhpToXml($input);
                 },
             );

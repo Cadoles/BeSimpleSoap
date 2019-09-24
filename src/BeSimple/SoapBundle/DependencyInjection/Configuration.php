@@ -96,8 +96,12 @@ class Configuration
                                     ->info('proxy configuration')
                                     ->addDefaultsIfNotSet()
                                     ->beforeNormalization()
-                                        ->ifTrue(function ($v) { return !is_array($v); })
-                                        ->then(function ($v) { return array('host' => null === $v ? false : $v); })
+                                        ->ifTrue(function ($v) {
+                                            return !is_array($v);
+                                        })
+                                        ->then(function ($v) {
+                                            return array('host' => null === $v ? false : $v);
+                                        })
                                     ->end()
                                     ->children()
                                         ->scalarNode('host')->defaultFalse()->end()

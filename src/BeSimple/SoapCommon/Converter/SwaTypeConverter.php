@@ -61,10 +61,8 @@ class SwaTypeConverter implements TypeConverterInterface, SoapKernelAwareInterfa
             $contentId = urldecode(substr($ref, 4));
 
             if (null !== ($part = $this->soapKernel->getAttachment($contentId))) {
-
                 return $part->getContent();
             } else {
-
                 return null;
             }
         }
