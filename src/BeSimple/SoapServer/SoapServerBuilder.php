@@ -33,7 +33,7 @@ class SoapServerBuilder extends AbstractSoapBuilder
      *
      * @return \BeSimple\SoapServer\SoapServerBuilder
      */
-    static public function createWithDefaults()
+    public static function createWithDefaults()
     {
         return parent::createWithDefaults()
             ->withErrorReporting(false);

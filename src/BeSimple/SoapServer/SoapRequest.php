@@ -62,7 +62,7 @@ class SoapRequest extends CommonSoapRequest
         } else {
             $url .= 'http://';
         }
-        $url .= isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : '';
+        $url .= isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
         if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) {
             $url .= ":{$_SERVER['SERVER_PORT']}";
         }

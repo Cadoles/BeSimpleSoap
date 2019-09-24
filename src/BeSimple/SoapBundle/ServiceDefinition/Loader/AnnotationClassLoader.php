@@ -133,7 +133,7 @@ class AnnotationClassLoader extends Loader
      */
     private function getController(\ReflectionClass $class, \ReflectionMethod $method, Annotation\Method $annotation)
     {
-        if(null !== $annotation->getService()) {
+        if (null !== $annotation->getService()) {
             return $annotation->getService() . ':' . $method->name;
         } else {
             return $class->name . '::' . $method->name;

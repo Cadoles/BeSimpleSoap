@@ -60,7 +60,7 @@ class BeSimpleSoapExtension extends Extension
 
         $container->setParameter('besimple.soap.definition.dumper.options.stylesheet', $config['wsdl_dumper']['stylesheet']);
 
-        foreach($config['services'] as $name => $serviceConfig) {
+        foreach ($config['services'] as $name => $serviceConfig) {
             $serviceConfig['name'] = $name;
             $this->createWebServiceContext($serviceConfig, $container);
         }

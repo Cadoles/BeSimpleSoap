@@ -47,7 +47,7 @@ abstract class SoapMessage
      *
      * @var array(string=>string)
      */
-    static protected $versionToContentTypeMap = array(
+    protected static $versionToContentTypeMap = array(
         SOAP_1_1 => 'text/xml; charset=utf-8',
         SOAP_1_2 => 'application/soap+xml; charset=utf-8'
     );

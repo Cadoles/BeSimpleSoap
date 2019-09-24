@@ -23,8 +23,8 @@ abstract class AbstractWebServerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var ProcessBuilder
      */
-    static protected $webserver;
-    static protected $websererPortLength;
+    protected static $webserver;
+    protected static $websererPortLength;
 
     public static function setUpBeforeClass()
     {

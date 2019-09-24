@@ -36,7 +36,6 @@ try {
     $attachment->binaryData = $b64;
 
     var_dump($sc->attachment($attachment));
-
 } catch (Exception $e) {
     var_dump($e);
 }

@@ -25,9 +25,9 @@ use org\bovigo\vfs\vfsStreamWrapper;
  */
 class WsdlDownloaderTest extends AbstractWebserverTest
 {
-    static protected $filesystem;
+    protected static $filesystem;
 
-    static protected $fixturesPath;
+    protected static $fixturesPath;
 
     /**
      * @dataProvider provideDownload

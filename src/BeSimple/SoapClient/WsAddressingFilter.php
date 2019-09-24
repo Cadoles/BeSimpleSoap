@@ -157,7 +157,6 @@ class WsAddressingFilter implements SoapRequestFilter, SoapResponseFilter
     public function getReferenceParameter($ns, $parameter)
     {
         if (isset($this->referenceParametersRecieved[$ns][$parameter])) {
-
             return $this->referenceParametersRecieved[$ns][$parameter];
         }
 

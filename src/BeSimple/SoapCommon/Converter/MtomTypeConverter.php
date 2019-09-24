@@ -65,10 +65,8 @@ class MtomTypeConverter implements TypeConverterInterface, SoapKernelAwareInterf
             $contentId = urldecode(substr($ref, 4));
 
             if (null !== ($part = $this->soapKernel->getAttachment($contentId))) {
-
                 return $part->getContent();
             } else {
-
                 return null;
             }
         }

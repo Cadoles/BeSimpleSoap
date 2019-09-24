@@ -56,7 +56,7 @@ class WsdlDownloader
     /**
      * Resolve WSDl/XSD includes.
      *
-     * @var boolean
+     * @var bool
      */
     protected $resolveRemoteIncludes = true;
 
@@ -64,13 +64,13 @@ class WsdlDownloader
      * Constructor.
      *
      * @param \BeSimple\SoapClient\Curl $curl                  Curl instance
-     * @param boolean                   $resolveRemoteIncludes WSDL/XSD include enabled?
-     * @param boolean                   $cacheWsdl             Cache constant
+     * @param bool                      $resolveRemoteIncludes WSDL/XSD include enabled?
+     * @param bool                      $cacheWsdl             Cache constant
      */
     public function __construct(Curl $curl, $resolveRemoteIncludes = true, $cacheWsdl = Cache::TYPE_DISK)
     {
-        $this->curl                  = $curl;
-        $this->resolveRemoteIncludes = (Boolean) $resolveRemoteIncludes;
+        $this->curl = $curl;
+        $this->resolveRemoteIncludes = (bool) $resolveRemoteIncludes;
 
         // get current WSDL caching config
         $this->cacheEnabled = $cacheWsdl === Cache::TYPE_NONE ? Cache::DISABLED : Cache::ENABLED == Cache::isEnabled();
@@ -107,13 +107,13 @@ class WsdlDownloader
                             file_put_contents($cacheFilePath, $response);
                         }
                     } else {
-                        throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '" . $wsdl ."'");
+                        throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '".$wsdl."'");
                     }
                 } elseif (file_exists($wsdl)) {
                     $response = file_get_contents($wsdl);
                     $this->resolveRemoteIncludes($response, $cacheFilePath);
                 } else {
-                    throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '" . $wsdl ."'");
+                    throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '".$wsdl."'");
                 }
             }
 
@@ -122,7 +122,7 @@ class WsdlDownloader
             return realpath($wsdl);
         }
 
-        throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '" . $wsdl ."'");
+        throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '".$wsdl."'");
     }
 
     /**
@@ -130,7 +130,7 @@ class WsdlDownloader
      *
      * @param string $file File URL/path
      *
-     * @return boolean
+     * @return bool
      */
     private function isRemoteFile($file)
     {
@@ -147,11 +147,9 @@ class WsdlDownloader
     /**
      * Resolves remote WSDL/XSD includes within the WSDL files.
      *
-     * @param string  $xml            XML file
-     * @param string  $cacheFilePath  Cache file name
-     * @param boolean $parentFilePath Parent file name
-     *
-     * @return void
+     * @param string $xml            XML file
+     * @param string $cacheFilePath  Cache file name
+     * @param bool   $parentFilePath Parent file name
      */
     private function resolveRemoteIncludes($xml, $cacheFilePath, $parentFilePath = null)
     {
@@ -214,10 +212,10 @@ class WsdlDownloader
         $urlParts = parse_url($base);
 
         // combine base path with relative path
-        if (isset($urlParts['path']) && '/' === $relative{0}) {
+        if (isset($urlParts['path']) && '/' === $relative[0]) {
             // $relative is absolute path from domain (starts with /)
             $path = $relative;
-        } elseif (isset($urlParts['path']) && strrpos($urlParts['path'], '/') === (strlen($urlParts['path']) )) {
+        } elseif (isset($urlParts['path']) && strrpos($urlParts['path'], '/') === (strlen($urlParts['path']))) {
             // base path is directory
             $path = $urlParts['path'].$relative;
         } elseif (isset($urlParts['path'])) {
@@ -247,7 +245,7 @@ class WsdlDownloader
                         break;
                     }
 
-                    $keyToDelete--;
+                    --$keyToDelete;
                 }
 
                 unset($parts[$key]);

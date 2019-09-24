@@ -338,7 +338,6 @@ abstract class WsSecurityFilterClientServer
                             return XmlSecurityKey::factory($algorithm, $key, false, XmlSecurityKey::TYPE_PRIVATE);
                         } elseif (Helper::NS_WSS === $referencedNode->namespaceURI
                                 && 'BinarySecurityToken' == $referencedNode->localName) {
-
                             $key = XmlSecurityPem::formatKeyInPemFormat($referencedNode->textContent);
 
                             return XmlSecurityKey::factory(XmlSecurityKey::RSA_SHA1, $key, false, XmlSecurityKey::TYPE_PUBLIC);
