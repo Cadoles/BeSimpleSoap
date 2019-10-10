@@ -107,7 +107,6 @@ class WsdlDownloader
 
                         if (!$doc) {
                             $errors = libxml_get_errors();
-                            dump($errors);
 
                             if (count($errors)) {
                                 throw new \Exception('There is something wrong with the WSDL file formatting. The file can\'t be downloaded to be cached.');
