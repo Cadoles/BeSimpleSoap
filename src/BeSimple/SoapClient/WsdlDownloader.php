@@ -101,19 +101,7 @@ class WsdlDownloader
                     if ($responseSuccessfull) {
                         $response = $this->curl->getResponseBody();
 
-                        libxml_use_internal_errors(true);
-
-                        $doc = simplexml_load_string($response);
-
-                        if (!$doc) {
-                            $errors = libxml_get_errors();
-
-                            if (count($errors)) {
-                                throw new \Exception('There is something wrong with the WSDL file formatting. The file can\'t be downloaded to be cached.');
-                            }
-
-                            libxml_clear_errors();
-                        }
+                        $this->testWSDL($response);
 
                         if ($this->resolveRemoteIncludes) {
                             $this->resolveRemoteIncludes($response, $cacheFilePath, $wsdl);
@@ -125,10 +113,29 @@ class WsdlDownloader
                     }
                 } elseif (file_exists($wsdl)) {
                     $response = file_get_contents($wsdl);
+
+                    try {
+                        $this->testWSDL($response);
+                    } catch (\Exception $e) {
+                        unlink($cacheFilePath);
+
+                        return $this->download($wsdl);
+                    }
+
                     $this->resolveRemoteIncludes($response, $cacheFilePath);
                 } else {
                     throw new \ErrorException("SOAP-ERROR: Parsing WSDL: Couldn't load from '".$wsdl."'");
                 }
+            }
+
+            $response = file_get_contents($cacheFilePath);
+
+            try {
+                $this->testWSDL($response);
+            } catch (\Exception $e) {
+                unlink($cacheFilePath);
+
+                return $this->download($wsdl);
             }
 
             return $cacheFilePath;
@@ -272,5 +279,22 @@ class WsdlDownloader
         }
 
         return $hostname.implode('/', $parts);
+    }
+
+    private function testWSDL($response)
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = simplexml_load_string($response);
+
+        if (!$doc) {
+            $errors = libxml_get_errors();
+
+            if (count($errors)) {
+                throw new \Exception('There is something wrong with the WSDL file formatting. The file can\'t be downloaded to be cached.');
+            }
+
+            libxml_clear_errors();
+        }
     }
 }
