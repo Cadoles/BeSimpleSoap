@@ -77,9 +77,8 @@ class Curl
         if (isset($options['compression']) && !($options['compression'] & SOAP_COMPRESSION_ACCEPT)) {
             curl_setopt($this->ch, CURLOPT_ENCODING, 'identity');
         }
-        if (isset($options['connection_timeout'])) {
-            curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $options['connection_timeout']);
-        }
+
+        curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 10);
 
         if (isset($options['proxy_host'])) {
             if (false !== $options['proxy_host']) {
@@ -167,7 +166,6 @@ class Curl
     private function execManualRedirect($redirects = 0)
     {
         if ($redirects > $this->followLocationMaxRedirects) {
-
             // TODO Redirection limit reached, aborting
             return false;
         }
@@ -193,7 +191,7 @@ class Curl
                 if (!isset($url['path'])) {
                     $url['path'] = $lastUrl['path'];
                 }
-                $newUrl = $url['scheme'] . '://' . $url['host'] . $url['path'] . ($url['query'] ? '?' . $url['query'] : '');
+                $newUrl = $url['scheme'].'://'.$url['host'].$url['path'].($url['query'] ? '?'.$url['query'] : '');
                 curl_setopt($this->ch, CURLOPT_URL, $newUrl);
 
                 return $this->execManualRedirect($redirects++);
@@ -205,7 +203,7 @@ class Curl
 
     /**
      * Error code mapping from cURL error codes to PHP ext/soap error messages
-     * (where applicable)
+     * (where applicable).
      *
      * http://curl.haxx.se/libcurl/c/libcurl-errors.html
      *
