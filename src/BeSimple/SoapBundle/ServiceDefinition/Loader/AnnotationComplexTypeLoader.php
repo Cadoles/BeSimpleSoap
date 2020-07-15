@@ -24,7 +24,7 @@ use BeSimple\SoapBundle\Util\Collection;
  */
 class AnnotationComplexTypeLoader extends AnnotationClassLoader
 {
-    private $aliasClass       = 'BeSimple\SoapBundle\ServiceDefinition\Annotation\Alias';
+    private $aliasClass = 'BeSimple\SoapBundle\ServiceDefinition\Annotation\Alias';
     private $complexTypeClass = 'BeSimple\SoapBundle\ServiceDefinition\Annotation\ComplexType';
 
     /**
@@ -43,7 +43,7 @@ class AnnotationComplexTypeLoader extends AnnotationClassLoader
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
         }
 
-        $annotations = array();
+        $annotations = [];
 
         $class = new \ReflectionClass($class);
         if ($alias = $this->reader->getClassAnnotation($class, $this->aliasClass)) {
@@ -59,6 +59,7 @@ class AnnotationComplexTypeLoader extends AnnotationClassLoader
                 $propertyComplexType->setValue($complexType->getValue());
                 $propertyComplexType->setNillable($complexType->isNillable());
                 $propertyComplexType->setName($property->getName());
+                $propertyComplexType->setMinOccurs($complexType->getMinOccurs());
                 $annotations['properties']->add($propertyComplexType);
             }
         }
@@ -72,7 +73,7 @@ class AnnotationComplexTypeLoader extends AnnotationClassLoader
      * @param mixed  $resource A resource
      * @param string $type     The resource type
      *
-     * @return Boolean True if this class supports the given resource, false otherwise
+     * @return bool True if this class supports the given resource, false otherwise
      */
     public function supports($resource, $type = null)
     {

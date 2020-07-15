@@ -20,11 +20,13 @@ class Part
     protected $name;
     protected $type;
     protected $nillable;
+    protected $minOccurs;
 
-    public function __construct($name, $type, $nillable = false)
+    public function __construct($name, $type, $nillable = false, $minOccurs = 1)
     {
         $this->name = $name;
         $this->type = $type;
+        $this->minOccurs = $minOccurs;
         $this->setNillable($nillable);
     }
 
@@ -50,6 +52,16 @@ class Part
 
     public function setNillable($nillable)
     {
-        $this->nillable = (boolean) $nillable;
+        $this->nillable = (bool) $nillable;
+    }
+
+    public function setMinOccurs($minOccurs)
+    {
+        $this->minOccurs = $minOccurs;
+    }
+
+    public function getMinOccurs()
+    {
+        return $this->minOccurs;
     }
 }
