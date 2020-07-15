@@ -101,6 +101,20 @@ class WsdlDownloader
                     if ($responseSuccessfull) {
                         $response = $this->curl->getResponseBody();
 
+                        libxml_use_internal_errors(true);
+
+                        $doc = simplexml_load_string($response);
+
+                        if (!$doc) {
+                            $errors = libxml_get_errors();
+
+                            if (count($errors)) {
+                                throw new \Exception('There is something wrong with the WSDL file formatting. The file can\'t be downloaded to be cached.');
+                            }
+
+                            libxml_clear_errors();
+                        }
+
                         if ($this->resolveRemoteIncludes) {
                             $this->resolveRemoteIncludes($response, $cacheFilePath, $wsdl);
                         } else {

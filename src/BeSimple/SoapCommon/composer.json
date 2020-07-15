@@ -25,8 +25,7 @@
         "ass/xmlsecurity": "~1.0"
     },
     "require-dev": {
-        "ext-mcrypt": "*",
-        "mikey179/vfsStream": "~1.0"
+        "mikey179/vfsstream": "~1.0"
     },
     "autoload": {
         "psr-0": { "BeSimple\\SoapCommon": "" }

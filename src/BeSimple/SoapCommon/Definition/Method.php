@@ -12,8 +12,6 @@
 
 namespace BeSimple\SoapCommon\Definition;
 
-use BeSimple\SoapCommon\Definition\Type\TypeRepository;
-
 /**
  * @author Francis Besset <francis.besset@gmail.com>
  */
@@ -66,7 +64,7 @@ class Method
         $this->input->add($name, $type);
     }
 
-    public function setOutput($type)
+    public function setOutput($type, $name = 'return')
     {
         $this->output->add('return', $type);
     }
