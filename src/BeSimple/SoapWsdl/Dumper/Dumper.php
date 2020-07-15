@@ -268,7 +268,6 @@ class Dumper
             // 1 is the default value of minOccurs.
             if (1 != $child->getMinOccurs()) {
                 $element->setAttribute('minOccurs', $child->getMinOccurs());
-                $element->setAttribute('maxOccurs', 'unbounded');
             }
 
             $all->appendChild($element);
